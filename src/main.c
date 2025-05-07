@@ -10,6 +10,7 @@
 #include "colors.h"
 #include "general.h"
 #include "cards.h"
+#include "drawing.h"
 #include "gameplay.h"
 
 int main(int argc, char* argv[])
@@ -64,11 +65,8 @@ int main(int argc, char* argv[])
          int startX = -15;
          int startY = -10;
 
-         // draw cards background
-         for (int i = 0; i < 4; i++)
-         {
-            drawSquare(-200+(i*100), -200, 70, 180, 1);
-         }
+         // draw cards sleeves
+         drawSleeve(-84, -86);
 
 
          // draw cards

@@ -31,16 +31,3 @@ void addTouchSquare(int x, int y, int w, int h, int id) // add an area to the cl
 	touchEl[id][2] = w;
 	touchEl[id][3] = h;
 }
-
-
-// xy positions for square // width&height of square
-// color code in list 	  // bool r (unused) if xy are relative to middle or top-left
-void drawSquare(int x, int y, int w, int h, int c)
-{
-	C2D_DrawRectangle(
-		convertPos('w', x),
-		convertPos('h', y),
-		0, w, h,
-		svdColors(c), svdColors(c), svdColors(c), svdColors(c)
-	);
-}
