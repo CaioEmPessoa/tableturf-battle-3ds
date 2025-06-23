@@ -6,8 +6,7 @@
 #include <stdlib.h>
 #include <3ds.h>
 
-#include "constants.h"
-#include "colors.h"
+#include "global.h"
 #include "general.h"
 #include "cards.h"
 #include "drawing.h"
@@ -39,8 +38,16 @@ int main(int argc, char* argv[])
 		"KEY_CPAD_RIGHT", "KEY_CPAD_LEFT", "KEY_CPAD_UP", "KEY_CPAD_DOWN"
 	};
 
-	// BACKGROUND COLOR
-	u32 clrClear = C2D_Color32(0xFF, 0xD8, 0xB0, 0x68);
+	// COLORS:
+	u32 clrRed    = C2D_Color32(255, 0, 0, 255);
+	u32 clrBlue   = C2D_Color32(0, 0, 255, 255);
+	u32 clrGreen  = C2D_Color32(0, 255, 0, 255);
+	u32 clrWhite  = C2D_Color32(255, 255, 255, 255);
+	u32 clrPink   = C2D_Color32(255, 192, 203, 255);
+	u32 clrOrange = C2D_Color32(255, 165, 0, 255);
+	u32 clrPurple = C2D_Color32(128, 0, 128, 255);
+	u32 clrBlack  = C2D_Color32(0, 0, 0, 255);
+	u32 clrClear  = C2D_Color32(255, 216, 176, 255);
 
 	// to check if keys are pressed in the next frame
 	u32 kDownOld = 0, kHeldOld = 0;
@@ -75,7 +82,7 @@ int main(int argc, char* argv[])
             Card card = cards[i];
 
             for (int j = 0; j < card.inkAmount; j++) {
-               int color = card.inkdSqrs[j] == card.special ? 5 : 6; // special point place
+               int color = card.inkdSqrs[j] == card.special ? clrOrange : clrPurple; // special point place
 
                int inkTileX = startX+(card.inkdSqrs[j]%card.width);
                int inkTileY = startY+card.inkdSqrs[j]/card.width;
@@ -93,9 +100,9 @@ int main(int argc, char* argv[])
 		slctScreen =  cursorBot ? 'b' : 't';
 		C2D_SceneBegin(cursorBot ? bot : top);
 
-			drawSquare(-backgroundSizeX*0.5, -backgroundSizeY*0.5, backgroundSizeX, backgroundSizeY, 5);
+			drawSquare(-backgroundSizeX*0.5, -backgroundSizeY*0.5, backgroundSizeX, backgroundSizeY, clrOrange);
 
-			drawSquare(playerTileX*topSqrSize, playerTileY*topSqrSize, topSqrSize, topSqrSize, 6);
+			drawSquare(playerTileX*topSqrSize, playerTileY*topSqrSize, topSqrSize, topSqrSize, clrPurple);
 
 		// end frame
 		C3D_FrameEnd(0);

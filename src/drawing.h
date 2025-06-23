@@ -2,13 +2,13 @@
 
 // xy positions for square // width&height of square
 // color code in list 	  // bool r (unused) if xy are relative to middle or top-left
-void drawSquare(int x, int y, int w, int h, int c)
+void drawSquare(int x, int y, int w, int h, u32 c)
 {
 	C2D_DrawRectangle(
 		convertPos('w', x),
 		convertPos('h', y), // should be negative but whatever
 		0, w, h,
-		svdColors(c), svdColors(c), svdColors(c), svdColors(c)
+		c, c, c, c
 	);
 }
 
