@@ -9,6 +9,7 @@
 #include "global.h"
 #include "general.h"
 #include "cards.h"
+#include "player.h"
 #include "drawing.h"
 #include "gameplay.h"
 
@@ -57,6 +58,16 @@ int main(int argc, char* argv[])
 	C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
 	C3D_RenderTarget* bot = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
 
+	Player player = {
+		.name = "Debug Player",
+		.deck = {}
+	};
+
+	player.deck[0] = cards[0];
+	player.deck[1] = cards[0];
+	player.deck[2] = cards[2];
+	player.deck[3] = cards[5];
+
 	// Main loop
 	while (aptMainLoop())
 	{
@@ -74,9 +85,9 @@ int main(int argc, char* argv[])
          int pixelStartX = -15;
          int pixelStartY = -10;
 
-         for (int i = 0; i < cardsAmmt; i++) {
-
-            Card card = cards[i];
+		 int deckSize = sizeof(player.deck) / sizeof(cards[0]);
+         for (int i=0; i<deckSize; i++) {
+            Card card = player.deck[i];
 
             for (int j = 0; j < card.inkAmount; j++) {
                int color = card.inkdSqrs[j] == card.special ? clrOrange : clrPurple; // special point place

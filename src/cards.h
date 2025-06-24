@@ -68,5 +68,5 @@ static Card cards[102] = {
    }
 };
 
-static int cardsAmmt = sizeof(cards) / sizeof(cards[0]);
+static int totalCardsAmmt = sizeof(cards) / sizeof(cards[0]); // for testing
 

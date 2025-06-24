@@ -1,5 +1,4 @@
 
-
 // xy positions for square // width&height of square // color of the square
 void drawSquare(int x, int y, int w, int h, u32 c)
 {
