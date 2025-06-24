@@ -65,18 +65,15 @@ int main(int argc, char* argv[])
 		C2D_TargetClear(top, clrClear);
 		C2D_TargetClear(bot, clrClear);
 
+		// START DRAWING
 		// Utilities Screen (mainly bottom)
 		slctScreen =  cursorBot ? 't' : 'b';
 		C2D_SceneBegin(cursorBot ? top : bot);
 
-         int startX = -15;
-         int startY = -10;
+         // draw card's pixel
+         int pixelStartX = -15;
+         int pixelStartY = -10;
 
-         // draw cards sleeves
-         drawSleeve(-84, -86);
-
-
-         // draw cards
          for (int i = 0; i < cardsAmmt; i++) {
 
             Card card = cards[i];
@@ -84,15 +81,15 @@ int main(int argc, char* argv[])
             for (int j = 0; j < card.inkAmount; j++) {
                int color = card.inkdSqrs[j] == card.special ? clrOrange : clrPurple; // special point place
 
-               int inkTileX = startX+(card.inkdSqrs[j]%card.width);
-               int inkTileY = startY+card.inkdSqrs[j]/card.width;
+               int inkTileX = pixelStartX+(card.inkdSqrs[j]%card.width);
+               int inkTileY = pixelStartY+card.inkdSqrs[j]/card.width;
 
                drawSquare(inkTileX*btnSqrSize, inkTileY*btnSqrSize, btnSqrSize, btnSqrSize, color);
             }
 
-            startX += card.width+1;
-            if (startX >= 15) {
-               startX = -10; startY += 5;
+            pixelStartX += card.width+1;
+            if (pixelStartX >= 15) {
+               pixelStartX = -10; pixelStartY += 5;
             }
          }
 
@@ -104,8 +101,8 @@ int main(int argc, char* argv[])
 
 			drawSquare(playerTileX*topSqrSize, playerTileY*topSqrSize, topSqrSize, topSqrSize, clrPurple);
 
-		// end frame
 		C3D_FrameEnd(0);
+		// END DRAWING
 
 		//Read the touch screen coordinates
 		hidTouchRead(&touch);
@@ -119,11 +116,6 @@ int main(int argc, char* argv[])
 		if (kDown != kDownOld || kHeld == kHeldOld ||
 			posXOld != touch.px || posYOld != touch.py)
 		{
-			//Clear console
-			consoleClear();
-			// Line must be rewritten because we cleared the whole console
-			printf("\x1b[1;1HPress Start to exit.");
-
 			int i;
 			for (i = 0; i < 32; i++)
 			{

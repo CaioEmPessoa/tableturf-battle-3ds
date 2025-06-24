@@ -7,6 +7,7 @@ typedef struct {
    int special;
    int cost;
    int inkAmount;
+   bool active;
 } Card; // creating card obj
 
 static Card cards[102] = {

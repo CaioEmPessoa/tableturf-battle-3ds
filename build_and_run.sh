@@ -5,6 +5,4 @@ FILENAME='tableturf-battle'
 
 make
 
-sleep 1
-
 3dslink $FILENAME-3ds.3dsx $3DSIP

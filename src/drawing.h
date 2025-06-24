@@ -1,7 +1,6 @@
 
 
-// xy positions for square // width&height of square
-// color code in list 	  // bool r (unused) if xy are relative to middle or top-left
+// xy positions for square // width&height of square // color of the square
 void drawSquare(int x, int y, int w, int h, u32 c)
 {
 	C2D_DrawRectangle(
