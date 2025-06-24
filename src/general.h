@@ -1,12 +1,5 @@
 
 
-// remove item from array
-Card* removeCard(Card array[], int index, int length)
-{
-   for(int i = index; i < length - 1; i++) array[i] = array[i + 1];
-   return array;
-}
-
 // convert start position from bottom-left to middle
 int convertPos(char type, int pos)
 {
