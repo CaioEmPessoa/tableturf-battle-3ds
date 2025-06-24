@@ -1,8 +1,13 @@
+// constants
 #define TOP_SCREEN_WIDTH  400
 #define TOP_SCREEN_HEIGHT 240
 
 #define BOT_SCREEN_WIDTH  320
 #define BOT_SCREEN_HEIGHT 240
+
+// macros
+#define ARRAY_LEN(arr) (sizeof(arr) / sizeof((arr)[0]))
+#define UNUSED(x) (void)(x)
 
 // board elements
 static int maxTileX = 10; // set tile boundaries
