@@ -1,9 +1,10 @@
 
 
 // remove item from array
-void removeItem(array_type *array, int index, int length)
+void removeCard(Card array, int index, int length)
 {
    for(int i = index; i < array_length - 1; i++) array[i] = array[i + 1];
+   return array
 }
 
 // convert start position from bottom-left to middle
