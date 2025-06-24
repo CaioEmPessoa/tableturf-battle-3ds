@@ -7,9 +7,9 @@
 #include <3ds.h>
 
 #include "global.h"
-#include "general.h"
 #include "cards.h"
 #include "player.h"
+#include "general.h"
 #include "drawing.h"
 #include "gameplay.h"
 
@@ -67,6 +67,20 @@ int main(int argc, char* argv[])
 	player.deck[1] = cards[0];
 	player.deck[2] = cards[2];
 	player.deck[3] = cards[5];
+	player.deck[4] = cards[1];
+	player.deck[5] = cards[3]; // the player will eventually have to choose the cards they want to add
+
+	memcpy(player.tmpDeck, player.deck, sizeof(player.deck));
+
+	for (int i = 0; i < 3; i++)
+	{
+		int rndCard = rand() % (ARRAY_LEN(player.tmpDeck) - 0 + 1) + 0; // lenght = max, 0 = min
+
+		player.hand[i] = player.tmpDeck[i];
+
+		removeCard(player.tmpDeck, rndCard, ARRAY_LEN(player.tmpDeck));
+	}
+
 
 	// Main loop
 	while (aptMainLoop())
@@ -85,9 +99,31 @@ int main(int argc, char* argv[])
          int pixelStartX = -15;
          int pixelStartY = -10;
 
-		 int deckSize = sizeof(player.deck) / sizeof(cards[0]);
-         for (int i=0; i<deckSize; i++) {
+		 // display deck
+         for (int i=0; i <= ARRAY_LEN(player.tmpDeck)-1; i++) {
             Card card = player.deck[i];
+
+            for (int j = 0; j < card.inkAmount; j++) {
+               int color = card.inkdSqrs[j] == card.special ? clrOrange : clrPurple; // special point place
+
+               int inkTileX = pixelStartX+(card.inkdSqrs[j]%card.width);
+               int inkTileY = pixelStartY+card.inkdSqrs[j]/card.width;
+
+               drawSquare(inkTileX*btnSqrSize, inkTileY*btnSqrSize, btnSqrSize, btnSqrSize, color);
+            }
+
+            pixelStartX += card.width+1;
+            if (pixelStartX >= 15) {
+               pixelStartX = -10; pixelStartY += 5;
+            }
+         }
+
+		 // display hand
+		 pixelStartY+=10;
+		 pixelStartX = -15;
+
+         for (int i=0; i<3; i++) {
+            Card card = player.hand[i];
 
             for (int j = 0; j < card.inkAmount; j++) {
                int color = card.inkdSqrs[j] == card.special ? clrOrange : clrPurple; // special point place
