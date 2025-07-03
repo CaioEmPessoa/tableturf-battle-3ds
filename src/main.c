@@ -10,6 +10,7 @@
 #include "general.h"
 #include "cards.h"
 #include "drawing.h"
+#include "drawing_obj.h"
 #include "gameplay.h"
 
 int main(int argc, char* argv[])
@@ -70,36 +71,11 @@ int main(int argc, char* argv[])
 		slctScreen =  cursorBot ? 't' : 'b';
 		C2D_SceneBegin(cursorBot ? top : bot);
 
-         // draw card's pixel
-         int pixelStartX = -15;
-         int pixelStartY = -10;
-
-         for (int i = 0; i < cardsAmmt; i++) {
-
-            Card card = cards[i];
-
-            for (int j = 0; j < card.inkAmount; j++) {
-               int color = card.inkdSqrs[j] == card.special ? clrOrange : clrPurple; // special point place
-
-               int inkTileX = pixelStartX+(card.inkdSqrs[j]%card.width);
-               int inkTileY = pixelStartY+card.inkdSqrs[j]/card.width;
-
-               drawSquare(inkTileX*btnSqrSize, inkTileY*btnSqrSize, btnSqrSize, btnSqrSize, color);
-            }
-
-            pixelStartX += card.width+1;
-            if (pixelStartX >= 15) {
-               pixelStartX = -10; pixelStartY += 5;
-            }
-         }
+			drawSleeve(0, 0);
 
 		// Drawing Canvas (mainly top screen)
 		slctScreen =  cursorBot ? 'b' : 't';
 		C2D_SceneBegin(cursorBot ? bot : top);
-
-			drawSquare(-backgroundSizeX*0.5, -backgroundSizeY*0.5, backgroundSizeX, backgroundSizeY, clrOrange);
-
-			drawSquare(playerTileX*topSqrSize, playerTileY*topSqrSize, topSqrSize, topSqrSize, clrPurple);
 
 		C3D_FrameEnd(0);
 		// END DRAWING
