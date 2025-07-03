@@ -68,5 +68,8 @@ static Card cards[102] = {
    }
 };
 
-static int cardsAmmt = sizeof(cards) / sizeof(cards[0]);
-
+// remove item from array
+void removeCard(Card array[], int index, int arrayLength)
+{
+   for(int i = index; i < arrayLength - 1; i++) array[i] = array[i + 1];
+}

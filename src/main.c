@@ -7,8 +7,9 @@
 #include <3ds.h>
 
 #include "global.h"
-#include "general.h"
 #include "cards.h"
+#include "player.h"
+#include "general.h"
 #include "drawing.h"
 #include "drawing_obj.h"
 #include "gameplay.h"
@@ -57,6 +58,30 @@ int main(int argc, char* argv[])
 	// Create screens
 	C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
 	C3D_RenderTarget* bot = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
+
+	Player player = {
+		.name = "Debug Player",
+		.deck = {}
+	};
+
+	player.deck[0] = cards[0];
+	player.deck[1] = cards[0];
+	player.deck[2] = cards[2];
+	player.deck[3] = cards[5];
+	player.deck[4] = cards[1];
+	player.deck[5] = cards[3]; // the player will eventually have to choose the cards they want to add
+
+	memcpy(player.tmpDeck, player.deck, sizeof(player.deck));
+
+	for (int i = 0; i < 3; i++)
+	{
+		int rndCard = rand() % (ARRAY_LEN(player.tmpDeck) - 0 + 1) + 0; // lenght = max, 0 = min
+
+		player.hand[i] = player.tmpDeck[i];
+
+		removeCard(player.tmpDeck, rndCard, ARRAY_LEN(player.tmpDeck));
+	}
+
 
 	// Main loop
 	while (aptMainLoop())
