@@ -5,7 +5,7 @@ int convertPos(char type, int pos)
 	int offset = (slctScreen == 't') ? ((type == 'w') ? TOP_SCREEN_WIDTH / 2 : TOP_SCREEN_HEIGHT / 2) : // top screen
 										((type == 'w') ? BOT_SCREEN_WIDTH / 2 : BOT_SCREEN_HEIGHT / 2); // bottom screen
 
-	return offset + pos;
+	return (type == 'h') ? offset - pos : offset + pos;
 }
 
 bool checkTouchSquare(int id) // check if click is on touch square area
