@@ -7,6 +7,7 @@
 #include <3ds.h>
 
 #include "global.h"
+#include "colors.h"
 #include "cards.h"
 #include "player.h"
 #include "general.h"
@@ -39,17 +40,6 @@ int main(int argc, char* argv[])
 		"KEY_CSTICK_RIGHT", "KEY_CSTICK_LEFT", "KEY_CSTICK_UP", "KEY_CSTICK_DOWN",
 		"KEY_CPAD_RIGHT", "KEY_CPAD_LEFT", "KEY_CPAD_UP", "KEY_CPAD_DOWN"
 	};
-
-	// COLORS:
-	u32 clrRed    = C2D_Color32(255, 0, 0, 255);
-	u32 clrBlue   = C2D_Color32(0, 0, 255, 255);
-	u32 clrGreen  = C2D_Color32(0, 255, 0, 255);
-	u32 clrWhite  = C2D_Color32(255, 255, 255, 255);
-	u32 clrPink   = C2D_Color32(255, 192, 203, 255);
-	u32 clrOrange = C2D_Color32(255, 165, 0, 255);
-	u32 clrPurple = C2D_Color32(128, 0, 128, 255);
-	u32 clrBlack  = C2D_Color32(0, 0, 0, 255);
-	u32 clrClear  = C2D_Color32(255, 216, 176, 255);
 
 	// to check if keys are pressed in the next frame
 	u32 kDownOld = 0, kHeldOld = 0;
@@ -88,8 +78,8 @@ int main(int argc, char* argv[])
 	{
 		// Render the scene
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		C2D_TargetClear(top, clrClear);
-		C2D_TargetClear(bot, clrClear);
+		C2D_TargetClear(top, getColor("clear"));
+		C2D_TargetClear(bot, getColor("clear"));
 
 		// START DRAWING
 		// Utilities Screen (mainly bottom)
@@ -97,6 +87,10 @@ int main(int argc, char* argv[])
 		C2D_SceneBegin(cursorBot ? top : bot);
 
 			drawSleeve(0, 0);
+
+			drawSquare(
+				0, 0, 100, 100, getColor("black")
+			);
 
 		// Drawing Canvas (mainly top screen)
 		slctScreen =  cursorBot ? 'b' : 't';
