@@ -10,7 +10,7 @@ typedef struct {
    bool active;
 } Card; // creating card obj
 
-static Card cards[102] = {
+static Card cards[CARDS_AMM] = {
    {
       .name = "Hero Shot",
       .id = 1,
@@ -72,4 +72,13 @@ static Card cards[102] = {
 void removeCard(Card array[], int index, int arrayLength)
 {
    for(int i = index; i < arrayLength - 1; i++) array[i] = array[i + 1];
+}
+
+Card getCardFromId(int id)
+{
+   for(int i = 0; i < CARDS_AMM - 1; i++){
+      if (cards[i].id == id) {
+         return cards[i];
+      }
+   }
 }
