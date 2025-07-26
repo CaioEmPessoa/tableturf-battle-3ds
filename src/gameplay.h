@@ -33,7 +33,24 @@ void checkTouchPos()
 	if (cursorBot)
 	{ } // secondary screen functions
 	else
-	{ } // main touch screen functions
+	{
+		if (checkTouchSquare(0))
+		{
+			player.holding = 36;
+		}
+		else if (checkTouchSquare(1))
+		{
+			player.holding = 3;
+		}
+		else if (checkTouchSquare(2))
+		{
+			player.holding = 113;
+		}
+		else if (checkTouchSquare(3))
+		{
+			player.holding = 1;
+		}
+	} // main touch screen functions
 }
 
 void checkFrameKey(char key[]) // check for input in hold every frame
