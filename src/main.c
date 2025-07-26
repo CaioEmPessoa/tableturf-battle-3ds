@@ -49,11 +49,6 @@ int main(int argc, char* argv[])
 	C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
 	C3D_RenderTarget* bot = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
 
-	Player player = {
-		.name = "Debug Player",
-		.deck = {}
-	};
-
 	player.deck[0] = cards[0];
 	player.deck[1] = cards[0];
 	player.deck[2] = cards[2];
@@ -87,16 +82,22 @@ int main(int argc, char* argv[])
 		C2D_SceneBegin(cursorBot ? top : bot);
 
 			drawSleeve(-145, 10, 3);
-
 			drawSleeve(-145, -87, 36);
 
-			drawSleeve(0, 10, 1);
+			addTouchSquare(-145, 10, 70, 70, 0);
+			addTouchSquare(-145, -87, 70, 70, 1);
 
+			drawSleeve(0, 10, 1);
 			drawSleeve(0, -87, 113);
+
+			addTouchSquare(0, 10, 70, 70, 2);
+			addTouchSquare(0, -87, 70, 70, 3);
 
 		// Drawing Canvas (mainly top screen)
 		slctScreen =  cursorBot ? 'b' : 't';
 		C2D_SceneBegin(cursorBot ? bot : top);
+
+			drawCardBlocks(playerTileX, playerTileY, player.holding);
 
 		C3D_FrameEnd(0);
 		// END DRAWING
