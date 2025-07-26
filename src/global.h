@@ -5,6 +5,8 @@
 #define BOT_SCREEN_WIDTH  320
 #define BOT_SCREEN_HEIGHT 240
 
+#define CARDS_AMM 102
+
 // macros
 #define ARRAY_LEN(arr) (sizeof(arr) / sizeof((arr)[0]))
 #define UNUSED(x) (void)(x)

@@ -86,11 +86,13 @@ int main(int argc, char* argv[])
 		slctScreen =  cursorBot ? 't' : 'b';
 		C2D_SceneBegin(cursorBot ? top : bot);
 
-			drawSleeve(-145, 10);
-			drawSleeve(-145, -87);
+			drawSleeve(-145, 10, 3);
 
-			drawSleeve(0, 10);
-			drawSleeve(0, -87);
+			drawSleeve(-145, -87, 36);
+
+			drawSleeve(0, 10, 1);
+
+			drawSleeve(0, -87, 58);
 
 		// Drawing Canvas (mainly top screen)
 		slctScreen =  cursorBot ? 'b' : 't';
