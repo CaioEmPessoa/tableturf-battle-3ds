@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DSIP='YOURIP'
+DSIP='YUORIP'
 FILENAME='tableturf-battle'
 
 make
