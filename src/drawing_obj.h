@@ -15,10 +15,12 @@ void drawCardBlocks(int x, int y, int cardId)
         const int relY = sqrCoordY*btnSqrSize;
 
         const int centerX = relX - (card.width/2) * btnSqrSize;
-        // int centerY = relY - ( (card.inkAmount/card.width) /2 ) * btnSqrSize;
+
+        const int lastInk = card.inkdSqrs[card.inkAmount-1]; // last ink shuold be farthest ink from y
+        int centerY = relY - (lastInk/card.width) * btnSqrSize;
 
         const int inkTileX = x+centerX;
-        const int inkTileY = y+relY;
+        const int inkTileY = y-centerY;
 
         // void drawSquare(int x, int y, int w, int h, u32 color)
         drawSquare(inkTileX, inkTileY, btnSqrSize, btnSqrSize, color);

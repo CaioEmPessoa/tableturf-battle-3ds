@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
 
 			drawSleeve(0, 10, 1);
 
-			drawSleeve(0, -87, 58);
+			drawSleeve(0, -87, 113);
 
 		// Drawing Canvas (mainly top screen)
 		slctScreen =  cursorBot ? 'b' : 't';
