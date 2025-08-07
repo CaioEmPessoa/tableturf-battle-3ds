@@ -8,25 +8,23 @@ int convertPos(char type, int pos)
 	return (type == 'h') ? offset - pos : offset + pos;
 }
 
-bool checkTouchSquare(int id) // check if click is on touch square area
+void checkTouchClick() // check and execute if touch is on one of squares.
 {
-	int x0 = touchEl[id][0];
-	int x1 = x0 + touchEl[id][2];
-	int y0 = touchEl[id][1];
-	int y1 = y0 + touchEl[id][3];
+	for (int i = 0; i < touchElementsAmmt; i++)
+	{
+		TouchElements item = touchElements[i];
 
-	int posX = touch.px - BOT_SCREEN_WIDTH / 2;
-	int posY = touch.py - BOT_SCREEN_HEIGHT / 2;
+		int x0 = item.xyhw[0];
+		int x1 = x0 + item.xyhw[2];
+		int y0 = item.xyhw[1];
+		int y1 = y0 + item.xyhw[3];
 
-	if ((posX >= x0 && posX <= x1) && (posY >= y0 && posY <= y1)) return true;
-	else return false;
-}
+		int posX = touch.px - BOT_SCREEN_WIDTH / 2;
+		int posY = touch.py - BOT_SCREEN_HEIGHT / 2;
 
-// id being manual is a choice, so that id's have known places on the array, and not 'random' ones
-void addTouchSquare(int x, int y, int w, int h, int id) // add an area to the cliclabe list
-{
-	touchEl[id][0] = x;
-	touchEl[id][1] = y;
-	touchEl[id][2] = w;
-	touchEl[id][3] = h;
+		if ((posX >= x0 && posX <= x1) && (posY >= y0 && posY <= y1))
+		{
+			item.command();
+		};
+	}
 }

@@ -24,9 +24,3 @@ static int playerTileY = 1;
 static bool cursorBot = false;
 
 static char slctScreen; // screen that is being drawn on
-
-// touch elements
-static touchPosition touch; // touch coords, touch.px & touch.py
-
-// bottom screen touch elements
-static int touchEl[50][4] = {}; // touch elements

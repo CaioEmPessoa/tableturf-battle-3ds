@@ -25,37 +25,9 @@ void movePlayer(char nsew)
 	}
 }
 
-// ---- Adds created functions to input methods ---- //
-void checkTouchPos()
-{
-    // this if check if the screen is "fliped"
-    // and add functions to the flipped screen
-	if (cursorBot)
-	{ } // secondary screen functions
-	else
-	{
-		if (checkTouchSquare(0))
-		{
-			player.holding = 3;
-		}
-		else if (checkTouchSquare(1))
-		{
-			player.holding = 36;
-		}
-		else if (checkTouchSquare(2))
-		{
-			player.holding = 1;
-		}
-		else if (checkTouchSquare(3))
-		{
-			player.holding = 113;
-		}
-	} // main touch screen functions
-}
-
 void checkFrameKey(char key[]) // check for input in hold every frame
 {
-	if (strcmp(key, "KEY_TOUCH") == 0) checkTouchPos(); // needed for all touch functions
+	if (strcmp(key, "KEY_TOUCH") == 0) checkTouchClick(); // check in touch functions
 	else if (strcmp(key, "KEY_DUP") == 0 || strcmp(key, "KEY_CPAD_UP") == 0) movePlayer('N');
 	else if (strcmp(key, "KEY_DDOWN") == 0 || strcmp(key, "KEY_CPAD_DOWN") == 0) movePlayer('S');
 	else if (strcmp(key, "KEY_DRIGHT") == 0 || strcmp(key, "KEY_CPAD_RIGHT") == 0) movePlayer('E');
