@@ -1,37 +1,24 @@
 
 // ------------ Game-specific functions ------------ //
-void movePlayer(char nsew)
+void movePlayer(void* nsew)
 {
-	switch (nsew)
-	{
-	case 'N':
-		playerTileY += 1;
-		// if (playerTileY <= -maxTileY-1) playerTileY -= 1;
-		break;
-	case 'S':
-		playerTileY -= 1;
-		// if (playerTileY >= maxTileY) playerTileY += 1;
-		break;
-	case 'E':
-		playerTileX += 1;
-		// if (playerTileX >= maxTileX) playerTileX -= 1;
-		break;
-	case 'W':
-		playerTileX -= 1;
-		// if (playerTileX <= -maxTileX-1) playerTileX += 1;
-		break;
-	default:
-		break;
-	}
+	if (nsew == NULL) return;
+
+	char direction = *(char*)nsew;
+	if (direction == 'N') player.boardPosY += 1;
+	else if (direction == 'S') player.boardPosY -= 1;
+	else if (direction == 'E') player.boardPosX += 1;
+	else if (direction == 'W') player.boardPosX -= 1;
+}
+
+void changePlayerCard(void* holding)
+{
+    player.holding = *(int*)holding;
 }
 
 void checkFrameKey(char key[]) // check for input in hold every frame
 {
 	if (strcmp(key, "KEY_TOUCH") == 0) checkTouchClick(); // check in touch functions
-	else if (strcmp(key, "KEY_DUP") == 0 || strcmp(key, "KEY_CPAD_UP") == 0) movePlayer('N');
-	else if (strcmp(key, "KEY_DDOWN") == 0 || strcmp(key, "KEY_CPAD_DOWN") == 0) movePlayer('S');
-	else if (strcmp(key, "KEY_DRIGHT") == 0 || strcmp(key, "KEY_CPAD_RIGHT") == 0) movePlayer('E');
-	else if (strcmp(key, "KEY_DLEFT") == 0 || strcmp(key, "KEY_CPAD_LEFT") == 0) movePlayer('W');
 }
 
 void checkSingleKey(char key[]) // check for inputs if diff from before
