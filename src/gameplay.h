@@ -15,13 +15,3 @@ void changePlayerCard(void* holding)
 {
     player.holding = *(int*)holding;
 }
-
-void checkFrameKey(char key[]) // check for input in hold every frame
-{
-	if (strcmp(key, "KEY_TOUCH") == 0) checkTouchClick(); // check in touch functions
-}
-
-void checkSingleKey(char key[]) // check for inputs if diff from before
-{
-	if (strcmp(key, "KEY_Y") == 0) cursorBot = cursorBot ? false : true;
-}
