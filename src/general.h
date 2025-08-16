@@ -1,8 +1,12 @@
 
 // convert start position from top-left to middle
-int convertPos(char type, int pos)
+int convertPos(char type, int pos, void* screen)
 {
-	int offset = (slctScreen == 't')
+	char screenToConvert;
+	if (screen == NULL) {screenToConvert = slctScreen;}
+	else {screenToConvert = *(char*)screen;}
+
+	int offset = (screenToConvert == 't')
 	? ((type == 'w') ? TOP_SCREEN_WIDTH / 2 : TOP_SCREEN_HEIGHT / 2)  // top screen
 	: ((type == 'w') ? BOT_SCREEN_WIDTH / 2 : BOT_SCREEN_HEIGHT / 2); // bottom screen
 
@@ -21,7 +25,7 @@ void checkTouchClick() // check and execute if touch is on one of squares.
 		int y1 = y0 + item.xywh[3];
 
 		int posX = touch.px - BOT_SCREEN_WIDTH / 2;
-		int posY = touch.py - BOT_SCREEN_HEIGHT / 2;
+		int posY = convertPos('h', touch.py, &(char){'b'});
 
 		if ((posX >= x0 && posX <= x1) && (posY >= y0 && posY <= y1))
 		{

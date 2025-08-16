@@ -5,8 +5,8 @@
 void drawSquare(int x, int y, int w, int h, u32 c)
 {
 	C2D_DrawRectangle(
-		convertPos('w', x),
-		convertPos('h', y)-h,
+		convertPos('w', x, 0),
+		convertPos('h', y, 0)-h,
 		0, w, h,
 		c, c, c, c
 	);

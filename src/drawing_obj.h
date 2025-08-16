@@ -46,7 +46,7 @@ int* drawSleeve(int x, int y, int cardId)
     const int cbY = y +bgH/2;
     drawCardBlocks(cbX, cbY, cardId);
 
-    int result[4] = {x, y, cardWidth, -cardHeight};
+    int result[4] = {x, y, cardWidth, cardHeight};
 
     int *pResult = malloc(sizeof(int) * 4);
     memcpy(pResult, result, sizeof(int) * 4);
