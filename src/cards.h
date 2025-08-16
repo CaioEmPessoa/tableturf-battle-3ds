@@ -81,4 +81,5 @@ Card getCardFromId(int id)
          return cards[i];
       }
    }
+   return cards[0];
 }
