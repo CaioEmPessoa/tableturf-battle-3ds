@@ -4,6 +4,8 @@ typedef struct {
     int inkPoints;
     int specialPoints;
     int holding;
+    int boardPosX;
+    int boardPosY;
     Card hand[3];
     Card tmpDeck[30];
     Card deck[30];
@@ -12,5 +14,9 @@ typedef struct {
 Player player = {
     .name = "Debug Player",
     .deck = {},
-    .holding = 3
+    .holding = 3,
+    .boardPosX = 0,
+    .boardPosY = 0,
 };
+
+// TODO: Change player function
