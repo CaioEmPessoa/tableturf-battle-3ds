@@ -85,15 +85,14 @@ int main(int argc, char* argv[])
 		C2D_SceneBegin(cursorBot ? top : bot);
 
 			int* upLeft = drawSleeve(-145, 10, 3);
+			int* downLeft = drawSleeve(-145, -87, 36);
 			int* upRight = drawSleeve(0, 10, 1);
 			int* downRight = drawSleeve(0, -87, 113);
 
 			ADD_TOUCH_ELEMENT_INT(upLeft, changePlayerCard, 3);
+			ADD_TOUCH_ELEMENT_INT(downLeft, changePlayerCard, 36);
 			ADD_TOUCH_ELEMENT_CHAR(upRight, movePlayer, 'N');
 			ADD_TOUCH_ELEMENT_CHAR(downRight, movePlayer, 'S');
-
-			int* downLeft = drawSleeve(-145, -87, 36);
-			ADD_TOUCH_ELEMENT_INT(downLeft, changePlayerCard, 36);
 
 		// Drawing Canvas (mainly top screen)
 		slctScreen =  cursorBot ? 'b' : 't';
