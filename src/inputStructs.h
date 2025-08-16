@@ -9,7 +9,8 @@ typedef struct {
 
 typedef struct {
     voidFunc command;
-    char buttons[20][30]; // can add multiple buttons into a single command
+    void* args;
+    char* buttons; // TODO: can add multiple buttons into a single command
     bool screen;
 } ButtonElements;
 
@@ -35,20 +36,26 @@ void addTouchElement(int* xywh, voidFunc command, void* args, size_t args_size)
         touchElements[touchElementsAmmt].args = NULL;
     }
 
-    touchElementsAmmt+=1;
+    touchElementsAmmt++;
 }
 
-/*
-void addButtonElement(char buttons[20][30], voidFunc command, bool screen)
+void addButtonElement(char* buttons, voidFunc command, void* args, size_t args_size)
 {
     buttonElements[buttonElementsAmmt].command = command;
-    buttonElements[buttonElementsAmmt].screen = screen;
-    for(int i = 0; i < 20; i++) {
-        strncpy(buttonElements[buttonElementsAmmt].buttons[i], buttons[i], 30);
+    buttonElements[buttonElementsAmmt].buttons = buttons;
+
+    if (args != NULL && args_size > 0)
+    {
+        buttonElements[buttonElementsAmmt].args = malloc(args_size);
+        memcpy(buttonElements[buttonElementsAmmt].args, args, args_size);
+    } else
+    {
+        buttonElements[buttonElementsAmmt].args = NULL;
     }
-    buttonElementsAmmt+=1;
+
+    buttonElementsAmmt++;
 }
-*/
+
 
 // MACROS FOR USING THIS FUNCTIONS
 #define ADD_TOUCH_ELEMENT_INT(xywh, command, value) \
@@ -61,4 +68,10 @@ void addButtonElement(char buttons[20][30], voidFunc command, bool screen)
     do { \
         char arg = (value); \
         addTouchElement((xywh), (command), &arg, sizeof(char)); \
+    } while(0)
+
+#define ADD_BUTTON_ELEMENT_CHAR(buttons, command, value) \
+    do { \
+        char arg = (value); \
+        addTouchElement((buttons), (command), &arg, sizeof(char)); \
     } while(0)

@@ -29,8 +29,8 @@ int main(int argc, char* argv[])
 	// -------| INITIAL VARIABLES |------
 
 	// BACKGROUND POSITION
-	int backgroundSizeX = (maxTileX*topSqrSize)*2;
-	int backgroundSizeY = (maxTileY*topSqrSize)*2;
+	// int backgroundSizeX = (maxTileX*topSqrSize)*2;
+	// int backgroundSizeY = (maxTileY*topSqrSize)*2;
 
 	// ARRAY WITH ALL KEY
 	char keysNames[32][32] = {
