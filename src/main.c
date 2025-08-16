@@ -1,15 +1,18 @@
 
 #include <citro2d.h>
+#include <3ds.h>
 
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <3ds.h>
 
 #include "global.h"
+
 #include "colors.h"
 #include "cards.h"
 #include "player.h"
+#include "inputStructs.h"
+
 #include "general.h"
 #include "drawing.h"
 #include "drawing_obj.h"
@@ -81,23 +84,22 @@ int main(int argc, char* argv[])
 		slctScreen =  cursorBot ? 't' : 'b';
 		C2D_SceneBegin(cursorBot ? top : bot);
 
-			drawSleeve(-145, 10, 3);
-			drawSleeve(-145, -87, 36);
+			int* upLeft = drawSleeve(-145, 10, 3);
+			int* upRight = drawSleeve(0, 10, 1);
+			int* downRight = drawSleeve(0, -87, 113);
 
-			addTouchSquare(-145, 10, 70, 70, 0);
-			addTouchSquare(-145, -87, 70, 70, 1);
+			ADD_TOUCH_ELEMENT_INT(upLeft, changePlayerCard, 3);
+			ADD_TOUCH_ELEMENT_CHAR(upRight, movePlayer, 'N');
+			ADD_TOUCH_ELEMENT_CHAR(downRight, movePlayer, 'S');
 
-			drawSleeve(0, 10, 1);
-			drawSleeve(0, -87, 113);
-
-			addTouchSquare(0, 10, 70, 70, 2);
-			addTouchSquare(0, -87, 70, 70, 3);
+			int* downLeft = drawSleeve(-145, -87, 36);
+			ADD_TOUCH_ELEMENT_INT(downLeft, changePlayerCard, 36);
 
 		// Drawing Canvas (mainly top screen)
 		slctScreen =  cursorBot ? 'b' : 't';
 		C2D_SceneBegin(cursorBot ? bot : top);
 
-			drawCardBlocks(playerTileX, playerTileY, player.holding);
+			drawCardBlocks(player.boardPosX, player.boardPosY, player.holding);
 
 		C3D_FrameEnd(0);
 		// END DRAWING
