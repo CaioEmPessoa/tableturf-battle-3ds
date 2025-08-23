@@ -15,3 +15,8 @@ void changePlayerCard(void* holding)
 {
     player.holding = *(int*)holding;
 }
+
+void flipScreens(void* n)
+{
+    cursorBot = cursorBot ? false : true;
+}

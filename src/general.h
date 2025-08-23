@@ -56,5 +56,4 @@ void checkFrameKey(char key[]) // check for input in hold every frame
 void checkSingleKey(char key[]) // check for inputs if diff from before
 {
 	checkButtonClick(key, false);
-	// if (strcmp(key, "KEY_Y") == 0) cursorBot = cursorBot ? false : true;
 }

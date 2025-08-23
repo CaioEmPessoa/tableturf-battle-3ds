@@ -103,10 +103,12 @@ int main(int argc, char* argv[])
 			ADD_TOUCH_ELEMENT_CHAR(upRight, movePlayer, 'N');
 			ADD_TOUCH_ELEMENT_CHAR(downRight, movePlayer, 'S');
 
-			ADD_BUTTON_ELEMENT_CHAR("KEY_X", movePlayer, 'N', true);
-			ADD_BUTTON_ELEMENT_CHAR("KEY_A", movePlayer, 'W', true);
-			ADD_BUTTON_ELEMENT_CHAR("KEY_Y", movePlayer, 'E', false);
-			ADD_BUTTON_ELEMENT_CHAR("KEY_B", movePlayer, 'S', false);
+			ADD_BUTTON_ELEMENT_CHAR("KEY_CPAD_UP", movePlayer, 'N', true);
+			ADD_BUTTON_ELEMENT_CHAR("KEY_CPAD_DOWN", movePlayer, 'S', true);
+			ADD_BUTTON_ELEMENT_CHAR("KEY_CPAD_RIGHT", movePlayer, 'E', true);
+			ADD_BUTTON_ELEMENT_CHAR("KEY_CPAD_LEFT", movePlayer, 'W', true);
+
+			ADD_BUTTON_ELEMENT_CHAR("KEY_Y", flipScreens, 'n', false);
 		}
 		commandsRan = true;
 
