@@ -102,6 +102,11 @@ int main(int argc, char* argv[])
 			ADD_TOUCH_ELEMENT_INT(downLeft, changePlayerCard, 36);
 			ADD_TOUCH_ELEMENT_CHAR(upRight, movePlayer, 'N');
 			ADD_TOUCH_ELEMENT_CHAR(downRight, movePlayer, 'S');
+
+			ADD_BUTTON_ELEMENT_CHAR("KEY_X", movePlayer, 'N');
+			ADD_BUTTON_ELEMENT_CHAR("KEY_A", movePlayer, 'W');
+			ADD_BUTTON_ELEMENT_CHAR("KEY_Y", movePlayer, 'E');
+			ADD_BUTTON_ELEMENT_CHAR("KEY_B", movePlayer, 'S');
 		}
 		commandsRan = true;
 

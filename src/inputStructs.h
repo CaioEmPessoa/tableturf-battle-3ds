@@ -48,8 +48,7 @@ void addButtonElement(char* buttons, voidFunc command, void* args, size_t args_s
     {
         buttonElements[buttonElementsAmmt].args = malloc(args_size);
         memcpy(buttonElements[buttonElementsAmmt].args, args, args_size);
-    } else
-    {
+    } else {
         buttonElements[buttonElementsAmmt].args = NULL;
     }
 
@@ -73,5 +72,5 @@ void addButtonElement(char* buttons, voidFunc command, void* args, size_t args_s
 #define ADD_BUTTON_ELEMENT_CHAR(buttons, command, value) \
     do { \
         char arg = (value); \
-        addTouchElement((buttons), (command), &arg, sizeof(char)); \
+        addButtonElement((char*)(buttons), (command), &arg, sizeof(char)); \
     } while(0)

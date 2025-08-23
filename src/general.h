@@ -34,9 +34,23 @@ void checkTouchClick() // check and execute if touch is on one of squares.
 	}
 }
 
+void checkButtonClick(char key[]) // check and execute if one of the buttons are clicked.
+{
+	for (int i = 0; i < buttonElementsAmmt; i++)
+	{
+		ButtonElements item = buttonElements[i];
+
+		if (strcmp(key, item.buttons)==0)
+		{
+			item.command(item.args);
+		};
+	}
+}
+
 void checkFrameKey(char key[]) // check for input in hold every frame
 {
 	if (strcmp(key, "KEY_TOUCH") == 0) checkTouchClick(); // check in touch functions
+	else checkButtonClick(key);
 }
 
 void checkSingleKey(char key[]) // check for inputs if diff from before
