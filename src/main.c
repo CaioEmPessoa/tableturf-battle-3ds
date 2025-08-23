@@ -1,15 +1,18 @@
 
 #include <citro2d.h>
+#include <3ds.h>
 
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <3ds.h>
 
 #include "global.h"
+
 #include "colors.h"
 #include "cards.h"
 #include "player.h"
+#include "inputStructs.h"
+
 #include "general.h"
 #include "drawing.h"
 #include "drawing_obj.h"
@@ -23,11 +26,7 @@ int main(int argc, char* argv[])
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 	C2D_Prepare();
 
-	// -------| INITIAL VARIABLES |------
-
-	// BACKGROUND POSITION
-	int backgroundSizeX = (maxTileX*topSqrSize)*2;
-	int backgroundSizeY = (maxTileY*topSqrSize)*2;
+	// -------| VARIABLES |------
 
 	// ARRAY WITH ALL KEY
 	char keysNames[32][32] = {
@@ -45,21 +44,18 @@ int main(int argc, char* argv[])
 	u32 kDownOld = 0, kHeldOld = 0;
 	int posXOld = 0, posYOld = 0;
 
+	bool commandsRan = false;
+
 	// Create screens
 	C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
 	C3D_RenderTarget* bot = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
-
-	Player player = {
-		.name = "Debug Player",
-		.deck = {}
-	};
 
 	player.deck[0] = cards[0];
 	player.deck[1] = cards[0];
 	player.deck[2] = cards[2];
 	player.deck[3] = cards[5];
 	player.deck[4] = cards[1];
-	player.deck[5] = cards[3]; // the player will eventually have to choose the cards they want to add
+	player.deck[5] = cards[3]; // Adding player cards manually
 
 	memcpy(player.tmpDeck, player.deck, sizeof(player.deck));
 
@@ -86,20 +82,35 @@ int main(int argc, char* argv[])
 		slctScreen =  cursorBot ? 't' : 'b';
 		C2D_SceneBegin(cursorBot ? top : bot);
 
-			drawSleeve(-145, 10, 3);
-
-			drawSleeve(-145, -87, 36);
-
-			drawSleeve(0, 10, 1);
-
-			drawSleeve(0, -87, 113);
+			int* upLeft = drawSleeve(-145, 10, 3);
+			int* downLeft = drawSleeve(-145, -87, 36);
+			int* upRight = drawSleeve(0, 10, 1);
+			int* downRight = drawSleeve(0, -87, 113);
 
 		// Drawing Canvas (mainly top screen)
 		slctScreen =  cursorBot ? 'b' : 't';
 		C2D_SceneBegin(cursorBot ? bot : top);
 
+			drawCardBlocks(player.boardPosX, player.boardPosY, player.holding);
+
 		C3D_FrameEnd(0);
 		// END DRAWING
+
+		// COMMAND FUNCTIONS, RUN ONLY ON FIRST ITERATION.
+		if(!commandsRan) {
+			ADD_TOUCH_ELEMENT_INT(upLeft, changePlayerCard, 3);
+			ADD_TOUCH_ELEMENT_INT(downLeft, changePlayerCard, 36);
+			ADD_TOUCH_ELEMENT_CHAR(upRight, movePlayer, 'N');
+			ADD_TOUCH_ELEMENT_CHAR(downRight, movePlayer, 'S');
+
+			ADD_BUTTON_ELEMENT_CHAR("KEY_CPAD_UP", movePlayer, 'N', true);
+			ADD_BUTTON_ELEMENT_CHAR("KEY_CPAD_DOWN", movePlayer, 'S', true);
+			ADD_BUTTON_ELEMENT_CHAR("KEY_CPAD_RIGHT", movePlayer, 'E', true);
+			ADD_BUTTON_ELEMENT_CHAR("KEY_CPAD_LEFT", movePlayer, 'W', true);
+
+			ADD_BUTTON_ELEMENT_CHAR("KEY_Y", flipScreens, 'n', false);
+		}
+		commandsRan = true;
 
 		//Read the touch screen coordinates
 		hidTouchRead(&touch);

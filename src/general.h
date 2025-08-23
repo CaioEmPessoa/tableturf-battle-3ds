@@ -1,32 +1,59 @@
 
 // convert start position from top-left to middle
-int convertPos(char type, int pos)
+int convertPos(char type, int pos, void* screen)
 {
-	int offset = (slctScreen == 't') ? ((type == 'w') ? TOP_SCREEN_WIDTH / 2 : TOP_SCREEN_HEIGHT / 2) : // top screen
-										((type == 'w') ? BOT_SCREEN_WIDTH / 2 : BOT_SCREEN_HEIGHT / 2); // bottom screen
+	char screenToConvert;
+	if (screen == NULL) {screenToConvert = slctScreen;}
+	else {screenToConvert = *(char*)screen;}
+
+	int offset = (screenToConvert == 't')
+	? ((type == 'w') ? TOP_SCREEN_WIDTH / 2 : TOP_SCREEN_HEIGHT / 2)  // top screen
+	: ((type == 'w') ? BOT_SCREEN_WIDTH / 2 : BOT_SCREEN_HEIGHT / 2); // bottom screen
 
 	return (type == 'h') ? offset - pos : offset + pos;
 }
 
-bool checkTouchSquare(int id) // check if click is on touch square area
+void checkTouchClick() // check and execute if touch is on one of squares.
 {
-	int x0 = touchEl[id][0];
-	int x1 = x0 + touchEl[id][2];
-	int y0 = touchEl[id][1];
-	int y1 = y0 + touchEl[id][3];
+	for (int i = 0; i < touchElementsAmmt; i++)
+	{
+		TouchElements item = touchElements[i];
 
-	int posX = touch.px - BOT_SCREEN_WIDTH / 2;
-	int posY = touch.py - BOT_SCREEN_HEIGHT / 2;
+		int x0 = item.xywh[0];
+		int x1 = x0 + item.xywh[2];
+		int y0 = item.xywh[1];
+		int y1 = y0 + item.xywh[3];
 
-	if ((posX >= x0 && posX <= x1) && (posY >= y0 && posY <= y1)) return true;
-	else return false;
+		int posX = touch.px - BOT_SCREEN_WIDTH / 2;
+		int posY = convertPos('h', touch.py, &(char){'b'});
+
+		if ((posX >= x0 && posX <= x1) && (posY >= y0 && posY <= y1))
+		{
+			item.command(item.args);
+		};
+	}
 }
 
-// id being manual is a choice, so that id's have known places on the array, and not 'random' ones
-void addTouchSquare(int x, int y, int w, int h, int id) // add an area to the cliclabe list
+void checkButtonClick(char key[], bool repeat) // check and execute if one of the buttons are clicked.
 {
-	touchEl[id][0] = x;
-	touchEl[id][1] = y;
-	touchEl[id][2] = w;
-	touchEl[id][3] = h;
+	for (int i = 0; i < buttonElementsAmmt; i++)
+	{
+		ButtonElements item = buttonElements[i];
+
+		if (strcmp(key, item.buttons)==0 && item.repeat == repeat)
+		{
+			item.command(item.args);
+		};
+	}
+}
+
+void checkFrameKey(char key[]) // check for input in hold every frame
+{
+	if (strcmp(key, "KEY_TOUCH") == 0) checkTouchClick(); // check in touch functions
+	else checkButtonClick(key, true);
+}
+
+void checkSingleKey(char key[]) // check for inputs if diff from before
+{
+	checkButtonClick(key, false);
 }
