@@ -12,6 +12,7 @@ typedef struct {
     void* args;
     char* buttons; // TODO: can add multiple buttons into a single command
     bool screen;
+    bool repeat;
 } ButtonElements;
 
 static int touchElementsAmmt  = 0;
@@ -39,10 +40,11 @@ void addTouchElement(int* xywh, voidFunc command, void* args, size_t args_size)
     touchElementsAmmt++;
 }
 
-void addButtonElement(char* buttons, voidFunc command, void* args, size_t args_size)
+void addButtonElement(char* buttons, voidFunc command, void* args, size_t args_size, bool repeat)
 {
     buttonElements[buttonElementsAmmt].command = command;
     buttonElements[buttonElementsAmmt].buttons = buttons;
+    buttonElements[buttonElementsAmmt].repeat = repeat;
 
     if (args != NULL && args_size > 0)
     {
@@ -69,8 +71,8 @@ void addButtonElement(char* buttons, voidFunc command, void* args, size_t args_s
         addTouchElement((xywh), (command), &arg, sizeof(char)); \
     } while(0)
 
-#define ADD_BUTTON_ELEMENT_CHAR(buttons, command, value) \
+#define ADD_BUTTON_ELEMENT_CHAR(buttons, command, value, repeat) \
     do { \
         char arg = (value); \
-        addButtonElement((char*)(buttons), (command), &arg, sizeof(char)); \
+        addButtonElement((char*)(buttons), (command), &arg, sizeof(char), repeat); \
     } while(0)
