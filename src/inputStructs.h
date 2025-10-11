@@ -10,8 +10,7 @@ typedef struct {
 typedef struct {
     voidFunc command;
     void* args;
-    char** buttons;
-    int buttonsAmmt;
+    char* buttons; // TODO: can add multiple buttons into a single command
     bool screen;
     bool repeat;
 } ButtonElements;
@@ -41,44 +40,13 @@ void addTouchElement(int* xywh, voidFunc command, void* args, size_t args_size)
     touchElementsAmmt++;
 }
 
-void addButtonElement(char** buttons, voidFunc command, void* args, size_t args_size, bool repeat)
+void addButtonElement(char* buttons, voidFunc command, void* args, size_t args_size, bool repeat)
 {
     buttonElements[buttonElementsAmmt].command = command;
+    buttonElements[buttonElementsAmmt].buttons = buttons;
     buttonElements[buttonElementsAmmt].repeat = repeat;
 
-    // get buttonsAmmt
-    int buttonsAmmt = 0;
-    while (buttons[buttonsAmmt] != NULL) {
-        buttonsAmmt++;
-    }
-
-    buttonElements[buttonElementsAmmt].buttonsAmmt = buttonsAmmt;
-
-    // copy buttons to struct
-    if (buttonsAmmt > 0)
-    {
-        // alocando no bloco de comandos/botão uma variável do tipo char, que é um pointer de pointers.
-        // o tamanho dele é o tamanho de um char pointer * a quantidade de botões adicionados.
-        buttonElements[buttonElementsAmmt].buttons = (char**)malloc(sizeof(char*) * buttonsAmmt);
-
-        for (int i = 0; i < buttonsAmmt; i++)
-        {
-            // msm do de cima mas com o valor fixo de 32
-            buttonElements[buttonElementsAmmt].buttons[i] = (char*)malloc(32);
-
-            size_t len = strlen(buttons[i]);
-
-            // if (len > 31) len = 31; // prevent error
-
-            memcpy(buttonElements[buttonElementsAmmt].buttons[i], buttons[i], len);
-            buttonElements[buttonElementsAmmt].buttons[i][len] = '\0'; // adicionando fim da string
-        }
-    } else {
-        buttonElements[buttonElementsAmmt].buttons = NULL;
-    }
-
-    // copy args to struct
-    if (args_size > 0)
+    if (args != NULL && args_size > 0)
     {
         buttonElements[buttonElementsAmmt].args = malloc(args_size);
         memcpy(buttonElements[buttonElementsAmmt].args, args, args_size);
@@ -103,9 +71,8 @@ void addButtonElement(char** buttons, voidFunc command, void* args, size_t args_
         addTouchElement((xywh), (command), &arg, sizeof(char)); \
     } while(0)
 
-#define BUTTONS_ARRAY(...) (char*[]){__VA_ARGS__, NULL}
 #define ADD_BUTTON_ELEMENT_CHAR(buttons, command, value, repeat) \
     do { \
         char arg = (value); \
-        addButtonElement((char**)(buttons), (command), &arg, sizeof(char), repeat); \
+        addButtonElement((char*)(buttons), (command), &arg, sizeof(char), repeat); \
     } while(0)

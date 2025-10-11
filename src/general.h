@@ -36,17 +36,14 @@ void checkTouchClick() // check and execute if touch is on one of squares.
 
 void checkButtonClick(char key[], bool repeat) // check and execute if one of the buttons are clicked.
 {
-	for (int i = 0; i < buttonElementsAmmt; i++) // check for each command
+	for (int i = 0; i < buttonElementsAmmt; i++)
 	{
 		ButtonElements item = buttonElements[i];
 
-		for (int j = 0; j < item.buttonsAmmt; j++) // check for each button in the commands array
+		if (strcmp(key, item.buttons)==0 && item.repeat == repeat)
 		{
-			if (strcmp(key, item.buttons[j])==0 && item.repeat == repeat)
-			{
-				item.command(item.args);
-			};
-		}
+			item.command(item.args);
+		};
 	}
 }
 

@@ -6,20 +6,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// global variables
 #include "global.h"
 
-// colors and inputs that entitys may depend on
-#include "3ds-easy-lib/colors.h"
-#include "3ds-easy-lib/inputStructs.h"
-
-// entity classes
+#include "colors.h"
 #include "cards.h"
 #include "player.h"
+#include "inputStructs.h"
 
-// important helpers. draw basic objects, complex, specific math etc
-#include "3ds-easy-lib/general.h"
-#include "3ds-easy-lib/drawing.h"
+#include "general.h"
+#include "drawing.h"
 #include "drawing_obj.h"
 #include "gameplay.h"
 
@@ -108,12 +103,12 @@ int main(int argc, char* argv[])
 			ADD_TOUCH_ELEMENT_CHAR(upRight, movePlayer, 'N');
 			ADD_TOUCH_ELEMENT_CHAR(downRight, movePlayer, 'S');
 
-			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_UP", "KEY_CPAD_DOWN"), movePlayer, 'N', true);
-			// ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_DOWN"), movePlayer, 'S', true);
-			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_RIGHT"), movePlayer, 'E', true);
-			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_LEFT"), movePlayer, 'W', true);
+			ADD_BUTTON_ELEMENT_CHAR("KEY_CPAD_UP", movePlayer, 'N', true);
+			ADD_BUTTON_ELEMENT_CHAR("KEY_CPAD_DOWN", movePlayer, 'S', true);
+			ADD_BUTTON_ELEMENT_CHAR("KEY_CPAD_RIGHT", movePlayer, 'E', true);
+			ADD_BUTTON_ELEMENT_CHAR("KEY_CPAD_LEFT", movePlayer, 'W', true);
 
-			// ADD_BUTTON_ELEMENT_CHAR("KEY_Y", flipScreens, 'n', false);
+			ADD_BUTTON_ELEMENT_CHAR("KEY_Y", flipScreens, 'n', false);
 		}
 		commandsRan = true;
 
