@@ -109,7 +109,7 @@ int main(int argc, char* argv[])
 			ADD_TOUCH_ELEMENT_CHAR(downRight, movePlayer, 'S');
 
 			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_UP", "KEY_CPAD_DOWN"), movePlayer, 'N', true);
-			// ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_DOWN"), movePlayer, 'S', true);
+			// ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_DOWN"), movePlayer, 'S', true); //
 			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_RIGHT"), movePlayer, 'E', true);
 			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_LEFT"), movePlayer, 'W', true);
 
