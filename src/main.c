@@ -8,13 +8,15 @@
 
 #include "global.h"
 
-#include "colors.h"
+#include "3ds-easy-lib/colors.h"
+
 #include "cards.h"
 #include "player.h"
-#include "inputStructs.h"
 
-#include "general.h"
-#include "drawing.h"
+#include "3ds-easy-lib/inputStructs.h"
+#include "3ds-easy-lib/general.h"
+#include "3ds-easy-lib/drawing.h"
+
 #include "drawing_obj.h"
 #include "gameplay.h"
 
