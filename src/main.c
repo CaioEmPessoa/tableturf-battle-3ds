@@ -14,8 +14,8 @@
 #include "3ds-easy-lib/inputStructs.h"
 
 // entity classes
-#include "cards.h"
-#include "player.h"
+#include "entity/cards.h"
+#include "entity/player.h"
 
 // important helpers. draw basic objects, complex, specific math etc
 #include "3ds-easy-lib/general.h"
@@ -55,24 +55,17 @@ int main(int argc, char* argv[])
 	C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
 	C3D_RenderTarget* bot = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
 
-	player.deck[0] = cards[0];
-	player.deck[1] = cards[0];
-	player.deck[2] = cards[2];
-	player.deck[3] = cards[5];
-	player.deck[4] = cards[1];
-	player.deck[5] = cards[3]; // Adding player cards manually
+	// Creating player obj manually
+	addDeckCard(&player, cards[0]);
+	addDeckCard(&player, cards[0]);
+	addDeckCard(&player, cards[1]);
+	addDeckCard(&player, cards[2]);
+	addDeckCard(&player, cards[3]);
+	addDeckCard(&player, cards[4]);
+	addDeckCard(&player, cards[5]);
+	addDeckCard(&player, cards[6]);
 
-	memcpy(player.tmpDeck, player.deck, sizeof(player.deck));
-
-	for (int i = 0; i < 3; i++)
-	{
-		int rndCard = rand() % (ARRAY_LEN(player.tmpDeck) - 0 + 1) + 0; // lenght = max, 0 = min
-
-		player.hand[i] = player.tmpDeck[i];
-
-		removeCard(player.tmpDeck, rndCard, ARRAY_LEN(player.tmpDeck));
-	}
-
+	addHandCards(&player);
 
 	// Main loop
 	while (aptMainLoop())
@@ -87,33 +80,36 @@ int main(int argc, char* argv[])
 		slctScreen =  cursorBot ? 't' : 'b';
 		C2D_SceneBegin(cursorBot ? top : bot);
 
-			int* upLeft = drawSleeve(-145, 10, 3);
-			int* downLeft = drawSleeve(-145, -87, 36);
-			int* upRight = drawSleeve(0, 10, 1);
-			int* downRight = drawSleeve(0, -87, 113);
+			int* upLeft = drawSleeve(-145, 10, player.hand[0]);
+			int* downLeft = drawSleeve(-145, -87, player.hand[1]);
+			int* upRight = drawSleeve(0, 10, player.hand[2]);
+			int* downRight = drawSleeve(0, -87, player.hand[3]);
 
 		// Drawing Canvas (mainly top screen)
 		slctScreen =  cursorBot ? 'b' : 't';
 		C2D_SceneBegin(cursorBot ? bot : top);
 
-			drawCardBlocks(player.boardPosX, player.boardPosY, player.holding);
+			drawCardBlocks(player.boardPosX, player.boardPosY, player.hand[player.currentHoldingCard]);
 
 		C3D_FrameEnd(0);
 		// END DRAWING
 
 		// COMMAND FUNCTIONS, RUN ONLY ON FIRST ITERATION.
 		if(!commandsRan) {
-			ADD_TOUCH_ELEMENT_INT(upLeft, changePlayerCard, 3);
-			ADD_TOUCH_ELEMENT_INT(downLeft, changePlayerCard, 36);
+			ADD_TOUCH_ELEMENT_INT(upLeft, changePlayerHandCard, 0);
+			ADD_TOUCH_ELEMENT_INT(downLeft, changePlayerHandCard, 1);
 			ADD_TOUCH_ELEMENT_CHAR(upRight, movePlayer, 'N');
 			ADD_TOUCH_ELEMENT_CHAR(downRight, movePlayer, 'S');
 
-			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_UP", "KEY_CPAD_DOWN"), movePlayer, 'N', true);
-			// ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_DOWN"), movePlayer, 'S', true); //
-			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_RIGHT"), movePlayer, 'E', true);
-			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_LEFT"), movePlayer, 'W', true);
+			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_UP", "KEY_DUP"), movePlayer, 'N', true);
+			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_DOWN", "KEY_DDOWN"), movePlayer, 'S', true);
+			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_RIGHT", "KEY_DRIGHT"), movePlayer, 'E', true);
+			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_LEFT", "KEY_DLEFT"), movePlayer, 'W', true);
 
-			// ADD_BUTTON_ELEMENT_CHAR("KEY_Y", flipScreens, 'n', false);
+			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_ZL"), movePlayerCard, 'l', false);
+			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_ZR"), movePlayerCard, 'r', false);
+
+			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_Y"), flipScreens, 'n', false);
 		}
 		commandsRan = true;
 
