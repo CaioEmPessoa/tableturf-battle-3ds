@@ -1,10 +1,8 @@
 
 // complex and program-specific shapes, like the main player, trees etc..
 
-void drawCardBlocks(int x, int y, int cardId)
+void drawCardBlocks(int x, int y, Card card)
 {
-    Card card = getCardFromId(cardId);
-
     for (int j = 0; j < card.inkAmount; j++) {
         int color = card.inkdSqrs[j] == card.special ? getColor("purple") : getColor("orange"); // special point place
 
@@ -27,7 +25,7 @@ void drawCardBlocks(int x, int y, int cardId)
     }
 }
 
-int* drawSleeve(int x, int y, int cardId)
+int* drawSleeve(int x, int y, Card card)
 {
 
     const int cardWidth = 70, cardHeight = 70;
@@ -44,7 +42,7 @@ int* drawSleeve(int x, int y, int cardId)
 
     const int cbX = x +bgW/2; // cb = card block
     const int cbY = y +bgH/2;
-    drawCardBlocks(cbX, cbY, cardId);
+    drawCardBlocks(cbX, cbY, card);
 
     int result[4] = {x, y, cardWidth, cardHeight};
     int *pResult = malloc(sizeof(int) * 4);
