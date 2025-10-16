@@ -1,6 +1,12 @@
 
 // ------------ Game-specific functions ------------ //
-void movePlayer(void* nsew)
+
+void flipScreens(void* n)
+{
+    cursorBot = cursorBot ? false : true;
+}
+
+void movePlayer(void* nsew) // char type
 {
 	if (nsew == NULL) return;
 
@@ -11,12 +17,14 @@ void movePlayer(void* nsew)
 	else if (direction == 'W') player.boardPosX -= 1;
 }
 
-void changePlayerCard(void* holding)
+void changePlayerHandCard(void* currentHoldingCard) // int type
 {
-    player.holding = *(int*)holding;
+    player.currentHoldingCard = *(int*)currentHoldingCard;
 }
 
-void flipScreens(void* n)
+void movePlayerCard(void* direction) // need to add player as a parameter later
 {
-    cursorBot = cursorBot ? false : true;
+	if (player.cardsOnHand <= 1) return;
+	if(*(char*)direction == 'l' && player.currentHoldingCard >= 1) player.currentHoldingCard -= 1;
+	if(*(char*)direction == 'r' && player.currentHoldingCard < player.cardsOnHand-1) player.currentHoldingCard += 1;
 }
