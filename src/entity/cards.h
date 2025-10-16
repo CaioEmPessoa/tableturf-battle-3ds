@@ -18,7 +18,8 @@ static Card cards[CARDS_AMM] = {
       .inkdSqrs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 15},
       .width = 5,
       .special = 8,
-      .inkAmount = 12
+      .inkAmount = 12,
+      .active = true
    },
    {
       .name = "Splattershot Jr.",
@@ -27,7 +28,8 @@ static Card cards[CARDS_AMM] = {
       .inkdSqrs = {0, 1, 2, 3},
       .width = 3,
       .special = 1,
-      .inkAmount = 4
+      .inkAmount = 4,
+      .active = true
    },
    {
       .name = "Splattershot Pro",
@@ -37,7 +39,8 @@ static Card cards[CARDS_AMM] = {
       .width = 6,
       .special = 4,
       .cost = 4,
-      .inkAmount = 9
+      .inkAmount = 9,
+      .active = true
    },
    {
       .name = "Sloshing Machine",
@@ -46,7 +49,8 @@ static Card cards[CARDS_AMM] = {
       .inkdSqrs = {0, 1, 2, 4, 5, 7, 8},
       .width = 3,
       .special = 1,
-      .inkAmount = 7
+      .inkAmount = 7,
+      .active = true
    },
    {
       .name = "Burst Bomb",
@@ -55,7 +59,8 @@ static Card cards[CARDS_AMM] = {
       .inkdSqrs = {0},
       .width = 1,
       .special = 0,
-      .inkAmount = 1
+      .inkAmount = 1,
+      .active = true
    },
    {
       .name = "Tentatek",
@@ -64,7 +69,8 @@ static Card cards[CARDS_AMM] = {
       .inkdSqrs = {1, 2},
       .width = 2,
       .special = 1,
-      .inkAmount = 2
+      .inkAmount = 2,
+      .active = true
    }
 };
 
