@@ -9,7 +9,7 @@ typedef struct {
     int cardsOnHand;        // Ammount of cards on hand
     int currentHoldingCard; // Index of current card player are holding from its hand
     Card deck[30];          // List of all player cards
-    int deckCardsAmnt       // Ammount of cards in deck
+    int deckCardsAmnt;       // Ammount of cards in deck
 } Player;
 
 Player player = { // need to remove this from here URGENTE.

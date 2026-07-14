@@ -11,10 +11,10 @@ void movePlayer(void* nsew) // char type
 	if (nsew == NULL) return;
 
 	char direction = *(char*)nsew;
-	if (direction == 'N') player.boardPosY += 1;
-	else if (direction == 'S') player.boardPosY -= 1;
-	else if (direction == 'E') player.boardPosX += 1;
-	else if (direction == 'W') player.boardPosX -= 1;
+	if 		(direction == 'N') player.boardPosY += btnSqrSize;
+	else if (direction == 'S') player.boardPosY -= btnSqrSize;
+	else if (direction == 'E') player.boardPosX += btnSqrSize;
+	else if (direction == 'W') player.boardPosX -= btnSqrSize;
 }
 
 void changePlayerHandCard(void* currentHoldingCard) // int type

@@ -47,5 +47,20 @@ int* drawSleeve(int x, int y, Card card)
     int result[4] = {x, y, cardWidth, cardHeight};
     int *pResult = malloc(sizeof(int) * 4);
     memcpy(pResult, result, sizeof(int) * 4);
+
     return pResult;
+}
+
+int* drawArena(int x, int y)
+{
+
+    int arenaTiles = 10;
+    int arenaSize = 10*btnSqrSize;
+
+    int arenaBorderSize = arenaSize+btnSqrSize*2;
+
+    int* arenaBorder = drawSquare(x-btnSqrSize, y-btnSqrSize, arenaBorderSize, arenaBorderSize, getColor("green")); // arena border
+    int* arenaSquare = drawSquare(x, y, arenaSize, arenaSize, getColor("black")); // arena tiles
+
+    return arenaBorder;
 }
