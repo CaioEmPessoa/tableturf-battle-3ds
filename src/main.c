@@ -11,7 +11,7 @@
 
 // colors and inputs that entitys may depend on
 #include "3ds-easy-lib/colors.h"
-#include "3ds-easy-lib/inputStructs.h"
+#include "3ds-easy-lib/inputs.h"
 
 // entity classes
 #include "entity/cards.h"
@@ -22,6 +22,7 @@
 #include "3ds-easy-lib/drawing.h"
 #include "drawing_obj.h"
 #include "gameplay.h"
+#include "scenes.h"
 
 int main(int argc, char* argv[])
 {
@@ -49,11 +50,13 @@ int main(int argc, char* argv[])
 	u32 kDownOld = 0, kHeldOld = 0;
 	int posXOld = 0, posYOld = 0;
 
-	bool commandsRan = false;
+	bool commandsValid = false;
 
 	// Create screens
-	C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
-	C3D_RenderTarget* bot = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
+	Screens screens = {
+		.top    = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT),
+		.bottom = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT)
+	};
 
 	// Creating player obj manually
 	addDeckCard(&player, cards[0]);
@@ -72,46 +75,21 @@ int main(int argc, char* argv[])
 	{
 		// Render the scene
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		C2D_TargetClear(top, getColor("clear"));
-		C2D_TargetClear(bot, getColor("clear"));
 
 		// START DRAWING
-		// Utilities Screen (mainly bottom)
-		slctScreen =  cursorBot ? 't' : 'b';
-		C2D_SceneBegin(cursorBot ? top : bot);
 
-			int* upLeft = drawSleeve(-145, 10, player.hand[0]);
-			int* downLeft = drawSleeve(-145, -87, player.hand[1]);
-			int* upRight = drawSleeve(0, 10, player.hand[2]);
-			int* downRight = drawSleeve(0, -87, player.hand[3]);
+		CombatScene(player, screens, commandsValid);
 
-		// Drawing Canvas (mainly top screen)
-		slctScreen =  cursorBot ? 'b' : 't';
-		C2D_SceneBegin(cursorBot ? bot : top);
-
-			drawCardBlocks(player.boardPosX, player.boardPosY, player.hand[player.currentHoldingCard]);
-
-		C3D_FrameEnd(0);
 		// END DRAWING
+		C3D_FrameEnd(0);
 
-		// COMMAND FUNCTIONS, RUN ONLY ON FIRST ITERATION.
-		if(!commandsRan) {
-			ADD_TOUCH_ELEMENT_INT(upLeft, changePlayerHandCard, 0);
-			ADD_TOUCH_ELEMENT_INT(downLeft, changePlayerHandCard, 1);
-			ADD_TOUCH_ELEMENT_CHAR(upRight, movePlayer, 'N');
-			ADD_TOUCH_ELEMENT_CHAR(downRight, movePlayer, 'S');
-
-			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_UP", "KEY_DUP"), movePlayer, 'N', true);
-			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_DOWN", "KEY_DDOWN"), movePlayer, 'S', true);
-			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_RIGHT", "KEY_DRIGHT"), movePlayer, 'E', true);
-			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_LEFT", "KEY_DLEFT"), movePlayer, 'W', true);
-
-			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_ZL"), movePlayerCard, 'l', false);
-			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_ZR"), movePlayerCard, 'r', false);
-
+		// COMMAND FUNCTIONS.
+		// CAUTION TO RUN ONLY ONE TIME PER ITERATION
+		if(!commandsValid) {
 			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_Y"), flipScreens, 'n', false);
 		}
-		commandsRan = true;
+
+		commandsValid = true;
 
 		//Read the touch screen coordinates
 		hidTouchRead(&touch);
