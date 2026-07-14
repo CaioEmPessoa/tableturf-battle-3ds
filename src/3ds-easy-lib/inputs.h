@@ -2,6 +2,14 @@ typedef void (*voidFunc)(void*);
 
 typedef struct {
     voidFunc command;
+    char charArgs;
+    int intArgs;
+    void* genArgs;
+
+} Commands;
+
+typedef struct {
+    voidFunc command;
     void* args;
     int* xywh;
     bool screen;
