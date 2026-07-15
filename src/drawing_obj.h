@@ -51,11 +51,11 @@ int* drawSleeve(int x, int y, Card card)
     return pResult;
 }
 
-int* drawArena(int x, int y)
+int* drawArena(int x, int y, int tilesAmmount)
 {
 
-    int arenaTiles = 10;
-    int arenaSize = 10*btnSqrSize;
+    int arenaTiles = tilesAmmount;
+    int arenaSize = tilesAmmount*btnSqrSize;
 
     int arenaBorderSize = arenaSize+btnSqrSize*2;
 
