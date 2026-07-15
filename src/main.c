@@ -10,15 +10,16 @@
 #include "global.h"
 
 // colors and inputs that entitys may depend on
+#include "3ds-easy-lib/general.h"
 #include "3ds-easy-lib/colors.h"
-#include "3ds-easy-lib/inputs.h"
+#include "3ds-easy-lib/inputs_v2.h"
+// #include "3ds-easy-lib/inputs.h"
 
 // entity classes
 #include "entity/cards.h"
 #include "entity/player.h"
 
 // important helpers. draw basic objects, complex, specific math etc
-#include "3ds-easy-lib/general.h"
 #include "3ds-easy-lib/drawing.h"
 #include "drawing_obj.h"
 #include "gameplay.h"
@@ -86,7 +87,7 @@ int main(int argc, char* argv[])
 		// COMMAND FUNCTIONS.
 		// CAUTION TO RUN ONLY ONE TIME PER ITERATION
 		if(!commandsValid) {
-			ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_Y"), flipScreens, 'n', false);
+			// ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_Y"), flipScreens, 'n', false);
 		}
 
 		commandsValid = true;

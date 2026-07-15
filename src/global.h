@@ -23,4 +23,6 @@ static char slctScreen; // screen that is being drawn on
 
 static touchPosition touch; // touch coords, touch.px & touch.py
 
+typedef enum {TOP, BOTTOM} screen_types;
+
 typedef struct {C3D_RenderTarget* top; C3D_RenderTarget* bottom;} Screens;
