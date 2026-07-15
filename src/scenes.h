@@ -1,4 +1,5 @@
 
+#include <stdio.h>
 void clearScene(Screens screens) {
     C2D_TargetClear(screens.top, getColor("clear"));
     C2D_TargetClear(screens.bottom, getColor("clear"));
@@ -14,19 +15,32 @@ void CombatScene(Player player, Screens screens, bool commandsValid) {
     C2D_SceneBegin(screens.top);
 
     // Drawing elements
-    int* arena = drawArena(-10, -10);
+    int* arena = drawArena(-40, -40, 15);
 
     drawCardBlocks(player.boardPosX, player.boardPosY, player.hand[player.currentHoldingCard]);
 
     // Commands
     if(!commandsValid) {
-        ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_UP", "KEY_DUP"), movePlayer, 'N', false);
-        ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_DOWN", "KEY_DDOWN"), movePlayer, 'S', false);
-        ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_RIGHT", "KEY_DRIGHT"), movePlayer, 'E', false);
-        ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_CPAD_LEFT", "KEY_DLEFT"), movePlayer, 'W', false);
 
-        ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_ZL"), movePlayerCard, 'l', false);
-        ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_ZR"), movePlayerCard, 'r', false);
+        store_button_command(
+            movePlayer, &(parameter_t){.type = PARAM_CHAR, .value = {.char_val = 'N'}},
+            1, (char*[]){"KEY_CPAD_UP", "KEY_DUP"}, 2, false
+        );
+        store_button_command(
+            movePlayer, &(parameter_t){.type = PARAM_CHAR, .value = {.char_val = 'S'}},
+            1, (char*[]){"KEY_CPAD_DOWN", "KEY_DDOWN"}, 2, false
+        );
+        store_button_command(
+            movePlayer, &(parameter_t){.type = PARAM_CHAR, .value = {.char_val = 'E'}},
+            1, (char*[]){"KEY_CPAD_RIGHT", "KEY_DRIGHT"}, 2, false
+        );
+        store_button_command(
+            movePlayer, &(parameter_t){.type = PARAM_CHAR, .value = {.char_val = 'W'}},
+            1, (char*[]){"KEY_CPAD_LEFT", "KEY_DLEFT"}, 2, false
+        );
+
+        // ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_ZL"), movePlayerCard, 'l', false);
+        // ADD_BUTTON_ELEMENT_CHAR(BUTTONS_ARRAY("KEY_ZR"), movePlayerCard, 'r', false);
     }
 
     // ----- BOTTOM SCREEN -----
@@ -40,9 +54,9 @@ void CombatScene(Player player, Screens screens, bool commandsValid) {
 
     // Commands
     if(!commandsValid) {
-        ADD_TOUCH_ELEMENT_INT(upLeft, changePlayerHandCard, 0);
-        ADD_TOUCH_ELEMENT_INT(downLeft, changePlayerHandCard, 1);
-        ADD_TOUCH_ELEMENT_CHAR(upRight, changePlayerHandCard, 2);
-        ADD_TOUCH_ELEMENT_CHAR(downRight, changePlayerHandCard, 3);
+        store_touch_command(upLeft, changePlayerHandCard, &(parameter_t){.type = PARAM_INT, .value = {.int_val = 0}}, 1 );
+        store_touch_command(downLeft, changePlayerHandCard, &(parameter_t){.type = PARAM_INT, .value = {.int_val = 1}}, 1 );
+        store_touch_command(upRight, changePlayerHandCard, &(parameter_t){.type = PARAM_INT, .value = {.int_val = 2}}, 1 );
+        store_touch_command(downRight, changePlayerHandCard, &(parameter_t){.type = PARAM_INT, .value = {.int_val = 3}}, 1 );
     }
 }

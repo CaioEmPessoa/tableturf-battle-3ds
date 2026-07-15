@@ -8,6 +8,7 @@ typedef enum {
     PARAM_INT,
     PARAM_DOUBLE,
     PARAM_STRING,
+    PARAM_CHAR,
     PARAM_VOID_PTR
 } param_type_t;
 
@@ -16,6 +17,7 @@ typedef struct {
     union {
         int int_val;
         double double_val;
+        char char_val;
         char* string_val;
         void* void_ptr_val;
     } value;
@@ -30,12 +32,10 @@ typedef struct {
 typedef struct {
     command_t command;
     int xywh[4];
-    screen_types screen;
 } touch_commands_t;
 
 typedef struct {
     command_t command;
-    screen_types screen;
     char** buttons; // can be two pointers if memory to heavy
     int buttonsAmmt;
     bool repeat;
@@ -73,30 +73,31 @@ command_t _mount_command(void (*func)(parameter_t*, int), parameter_t* params, i
 }
 
 bool store_button_command(void (*func)(parameter_t*, int), parameter_t* params, int param_count,
-                          screen_types screen, char** buttons, int buttonsAmmt, bool repeat) {
+                          char** buttons, int buttonsAmmt, bool repeat) {
     if (stored_button_count >= MAX_COMMANDS) return false;
 
     stored_button_commands[stored_button_count].command = _mount_command(func, params, param_count);
-    stored_button_commands[stored_button_count].screen = screen;
     stored_button_commands[stored_button_count].repeat = repeat;
     stored_button_commands[stored_button_count].buttonsAmmt = buttonsAmmt;
 
     if (buttonsAmmt > 0) {
-        memcpy(stored_button_commands[stored_button_count].buttons,
-               buttons,
-               buttonsAmmt * sizeof(char*));
+        stored_button_commands[stored_button_count].buttons =
+            malloc(buttonsAmmt * sizeof(char*));
+        if (stored_button_commands[stored_button_count].buttons) {
+            memcpy(stored_button_commands[stored_button_count].buttons,
+                buttons,
+                buttonsAmmt * sizeof(char*));
+        }
     }
 
     stored_button_count++;
     return true;
 }
 
-bool store_touch_command(void (*func)(parameter_t*, int), parameter_t* params, int param_count,
-                         screen_types screen, int* xywh) {
+bool store_touch_command(int* xywh, void (*func)(parameter_t*, int), parameter_t* params, int param_count) {
     if (stored_touch_count >= MAX_COMMANDS) return false;
 
     stored_touch_commands[stored_touch_count].command = _mount_command(func, params, param_count);
-    stored_touch_commands[stored_touch_count].screen = screen;
     memcpy(
         stored_touch_commands[stored_touch_count].xywh, xywh,
         sizeof(stored_touch_commands[stored_touch_count].xywh)
@@ -123,6 +124,7 @@ void clear_button_commands() {
         for (int j = 0; j < stored_button_commands[i].command.param_count; j++) {
             if (stored_button_commands[i].command.parameters[j].type == PARAM_STRING) {
                 free(stored_button_commands[i].command.parameters[j].value.string_val);
+                free(stored_button_commands[i].buttons);
             }
         }
         free(stored_button_commands[i].command.parameters);
