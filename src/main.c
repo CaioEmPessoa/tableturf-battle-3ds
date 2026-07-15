@@ -12,7 +12,7 @@
 // colors and inputs that entitys may depend on
 #include "3ds-easy-lib/general.h"
 #include "3ds-easy-lib/colors.h"
-#include "3ds-easy-lib/inputs_v2.h"
+#include "3ds-easy-lib/inputs.h"
 // #include "3ds-easy-lib/inputs.h"
 
 // entity classes
