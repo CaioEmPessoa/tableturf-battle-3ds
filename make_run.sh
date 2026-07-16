@@ -38,7 +38,7 @@ if [ "$1" == "help" ]; then
 fi
 
 
-if [ "$clear_arg" != "false" ]; then
+if [ "$clear_arg" == "true" ]; then
     clear
 fi
 
