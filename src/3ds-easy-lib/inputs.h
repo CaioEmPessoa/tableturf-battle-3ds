@@ -149,7 +149,7 @@ void checkTouchClick() // check and execute if touch is on one of squares.
 		int y1 = y0 + item.xywh[3];
 
 		int posX = touch.px - BOT_SCREEN_WIDTH / 2; // touch and this variable is stored globally
-		int posY = convertPos('h', touch.py, &(char){'b'});
+		int posY = convertPosInScreen('h', touch.py, BOTTOM);
 
 		if ((posX >= x0 && posX <= x1) && (posY >= y0 && posY <= y1))
 		{
