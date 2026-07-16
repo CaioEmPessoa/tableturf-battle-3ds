@@ -27,10 +27,11 @@ void drawCardBlocks(int x, int y, Card card)
 
 int* drawSleeve(int x, int y, Card card)
 {
-
+    // Sleeve
     const int cardWidth = 70, cardHeight = 70;
     drawSquare(x, y, cardWidth, cardHeight, getColor("sleeveBackground"));
 
+    // Card image
     const int bgX = x+3;
     const int bgY = y+15;
 
@@ -38,11 +39,15 @@ int* drawSleeve(int x, int y, Card card)
     const int bgH = cardHeight-17;
     drawSquare(bgX, bgY, bgW, bgH, getColor("pink"));
 
-    // TODO: Draw bottom card status text
-
+    // Card image blocks
     const int cbX = x +bgW/2; // cb = card block
     const int cbY = y +bgH/2;
     drawCardBlocks(cbX, cbY, card);
+
+    // Card bottom status
+    const int statusX = bgX;
+    const int statusY = -bgY;
+    drawText(statusX, statusY, card.name, 0.6f);
 
     int result[4] = {x, y, cardWidth, cardHeight};
     int *pResult = malloc(sizeof(int) * 4);
