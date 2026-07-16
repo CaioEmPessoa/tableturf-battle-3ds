@@ -40,6 +40,9 @@ void movePlayerCard(void* direction) // need to add player as a parameter later
 	if(*(char*)direction == 'r' && player.currentHoldingCard < player.cardsOnHand-1) player.currentHoldingCard += 1;
 }
 
-void placeCard() {
-
+void placeCard(parameter_t* params, int param_count) {
+	placed_cards[placed_cards_ammnt].card   = player.hand[player.currentHoldingCard];
+	placed_cards[placed_cards_ammnt].card_x = player.boardPosX;
+	placed_cards[placed_cards_ammnt].card_y = player.boardPosY;
+	placed_cards_ammnt++;
 }

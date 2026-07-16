@@ -13,11 +13,17 @@ void CombatScene(Player player, Screens screens, bool commandsValid) {
 
     // ----- TOP SCREEN -----
     C2D_SceneBegin(screens.top);
+    selectedScreen = TOP;
 
     // Drawing elements
     int* arena = drawArena(-40, -40, 15);
 
     drawCardBlocks(player.boardPosX, player.boardPosY, player.hand[player.currentHoldingCard]);
+
+    for (int i = 0; i<=placed_cards_ammnt; i++) {
+        placed_cards_t placed_card = placed_cards[i];
+        drawCardBlocks(placed_card.card_x, placed_card.card_y, placed_card.card);
+    }
 
     // Commands
     if(!commandsValid) {
@@ -45,12 +51,15 @@ void CombatScene(Player player, Screens screens, bool commandsValid) {
 
     // ----- BOTTOM SCREEN -----
     C2D_SceneBegin(screens.bottom);
+    selectedScreen = BOTTOM;
 
     // Drawing elements
-    int* upLeft = drawSleeve(-145, 10, player.hand[0]);
-    int* downLeft = drawSleeve(-145, -87, player.hand[1]);
-    int* upRight = drawSleeve(0, 10, player.hand[2]);
-    int* downRight = drawSleeve(0, -87, player.hand[3]);
+    int* upLeft = drawSleeve(-120, 10, player.hand[0]);
+    int* downLeft = drawSleeve(-120, -87, player.hand[1]);
+    int* upRight = drawSleeve(40, 10, player.hand[2]);
+    int* downRight = drawSleeve(40, -87, player.hand[3]);
+
+    int* placeCardBtn = drawSquare(0, 0, 10, 10, getColor("red"));
 
     // Commands
     if(!commandsValid) {
@@ -58,5 +67,7 @@ void CombatScene(Player player, Screens screens, bool commandsValid) {
         store_touch_command(downLeft, changePlayerHandCard, &(parameter_t){.type = PARAM_INT, .value = {.int_val = 1}}, 1 );
         store_touch_command(upRight, changePlayerHandCard, &(parameter_t){.type = PARAM_INT, .value = {.int_val = 2}}, 1 );
         store_touch_command(downRight, changePlayerHandCard, &(parameter_t){.type = PARAM_INT, .value = {.int_val = 3}}, 1 );
+
+        store_touch_command(placeCardBtn, placeCard, NULL, 0);
     }
 }
