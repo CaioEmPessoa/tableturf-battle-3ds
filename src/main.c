@@ -83,6 +83,7 @@ int main(int argc, char* argv[])
 
 		// END DRAWING
 		C3D_FrameEnd(0);
+    	selectedScreen = NONE;
 
 		// COMMAND FUNCTIONS.
 		// CAUTION TO RUN ONLY ONE TIME PER ITERATION

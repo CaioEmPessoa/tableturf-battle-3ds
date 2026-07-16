@@ -1,3 +1,7 @@
+#include <stdlib.h>
+
+#define CARDS_AMM 102
+
 typedef struct {
    char name[30];
    int id;
